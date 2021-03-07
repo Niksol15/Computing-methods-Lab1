@@ -2,8 +2,8 @@
 // Created by solon on 18.02.2021.
 //
 
-#ifndef _COMPMETHODS_H
-#define _COMPMETHODS_H
+#ifndef _NONLINEQVSOLVER_H
+#define _NONLINEQVSOLVER_H
 
 #include <limits>
 #include <type_traits>
@@ -71,7 +71,7 @@ namespace CompMethods {
     }
 
     template<typename Function, typename FloatPoint>
-    FloatPoint RelaxationMethod(Function &&func, FloatPoint lambda,
+    constexpr FloatPoint RelaxationMethod(Function &&func, FloatPoint lambda,
                                 FloatPoint firstApproach,
                                 FloatPoint eps = std::numeric_limits<FloatPoint>::epsilon(),
                                 IsFloatingPoint<FloatPoint> = true) noexcept {
@@ -86,4 +86,4 @@ namespace CompMethods {
 }
 
 
-#endif //_COMPMETHODS_H
+#endif //_NONLINEQVSOLVER_H

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "CompMethods.hpp"
+#include "NonlinEqvSolver.hpp"
 
 using namespace std;
 
