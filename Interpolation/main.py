@@ -1,44 +1,39 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.linalg as la
+from scipy import interpolate
+import my_interpolate as interplt
 
 A = 0
-B = 15
-N = 9
+B = 5
+N = 10
+SCALE = 100
 
 
-def func(_x):
-    return np.sin(_x)
+def func(x):
+    return np.sin(3 * x) + np.cos(x)
+    #return x
 
+if __name__ == '__main__':
+    x = np.linspace(A, B, N)
+    y = func(x)
+    plt.scatter(x, y)
+    #polynomial_func = interplt.polynomial_interpolation(x, y)
+    #lagrange_func = interplt.lagrange_interpolation(x, y)
+    #newton_func = interplt.newton_interpolation(x, y)
+    spline_func = interplt.cubic_spline_interpolation(x, y)
+    new_x = np.linspace(A, B, SCALE * N)
+    #polynomial_y = polynomial_func(new_x)
+    #lagrange_y = [lagrange_func(i) for i in new_x]
+    #newton_y = [newton_func(i) for i in new_x]
+    spline_y = [spline_func(i) for i in new_x]
+    real_y = func(new_x)
 
-def my_interpolation(_x, _y):
-    if len(_x) != len(_y):
-        print("x.shape != y.shape")
-        return 0
-    arr_length = len(_x)
-    _A = np.zeros((arr_length, arr_length))
-    for i in range(arr_length):
-        for j in range(arr_length):
-            _A[i][j] = _x[i] ** j
-    _coefs = la.solve(_A, y)
+    plt.plot(new_x, real_y, "k")
+    plt.plot(new_x, spline_y, 'r')
+    #plt.plot(new_x, lagrange_y, "r")
+    #plt.plot(new_x, newton_y, "b")
 
-    def result(_arg):
-        res = 0
-        for i in range(_coefs.shape[0]):
-            res += _coefs[i] * (_arg ** i)
-        return res
-    return result
+    plt.show()
 
-
-x = np.linspace(A, B, N)
-y = [func(i) for i in x]
-finded_func = my_interpolation(x, y)
-
-new_x = np.linspace(A, B, 10 * N)
-finded_y = [finded_func(i) for i in new_x]
-real_y = [func(i) for i in new_x]
-plt.scatter(x, y)
-plt.plot(new_x, real_y, "k")
-plt.plot(new_x, finded_y, "r")
-plt.show()
 
